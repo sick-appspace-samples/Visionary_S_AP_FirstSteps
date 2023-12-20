@@ -1,27 +1,27 @@
 --[[----------------------------------------------------------------------------
-  
+
   Application Name: 03_DigitalIO
-  
-  
+
+
   Summary:
   Set one port to digital in and one to digital out
-  
+
   Description:
   The bidirectional digital ports can be defined as input or output.
   All the basics for using the ports are shown in this application.
   Setting a port to be input, setting a port to be output and registering
   a function to a change in the signal
-  
+
   How to run:
   First set this app as main (right-click -> "Set as main").
   Start by running the app (F5) or debugging (F7+F10).
   Set a breakpoint on the first row inside the main function to debug step-by-step.
   See the results in the viewer on the DevicePage.
-  
+
   More Information:
   See the tutorials:
   https://supportportal.sick.com/tutorial/visionary-s-ap-first-steps/
-  
+
 ------------------------------------------------------------------------------]]
 
 --Start of Global Scope---------------------------------------------------------
@@ -38,7 +38,7 @@ local currentDout2State = false
 
 -- Initialize digital in/out 1 to be an input, accessed in a global scope
 din_1 = Connector.DigitalIn.create("DI1")
-  
+
 -- Initialize digital in/out 2 to be an output
 local dout_2 = Connector.DigitalOut.create("DO2")
 
@@ -55,7 +55,6 @@ Timer.start(gTimer)
 -- No main function, as the timer is started in the global scope. After each expiration the
 -- state of dout_2 is changed
 
---@toggleDout2State()
 local function toggleDout2State()
   currentDout2State = not currentDout2State
   Connector.DigitalOut.set(dout_2, currentDout2State)
@@ -66,7 +65,7 @@ Timer.register(gTimer, "OnExpired", toggleDout2State)
 
 -- To track the changing value of an input, register a handler on
 -- the OnChange signal.
---@printDin1State(newState:bool)
+---@param newState bool
 local function printDin1State(newState)
   print("Digital I/O 1 changed state to " .. tostring(newState))
 end
